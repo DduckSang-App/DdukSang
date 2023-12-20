@@ -24,6 +24,23 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// webflux
+//	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-devtools'
+
+	implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+//	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
+
+	// org.JSON imple
+	implementation files('libs/json-20231013.jar')
+
+	// Json-simple
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+	implementation 'mysql:mysql-connector-java:8.0.33'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
