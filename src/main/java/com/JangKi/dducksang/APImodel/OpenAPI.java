@@ -1,49 +1,57 @@
 package com.JangKi.dducksang.APImodel;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import com.JangKi.dducksang.APImodel.ServiceKey;
+import com.JangKi.dducksang.Web.Dto.Map.MapListDto;
+import com.JangKi.dducksang.XMLReader.xmlClass;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
+import org.json.XML;
+import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.w3c.dom.Document;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+@Slf4j
+@Component
+@RequiredArgsConstructor
 public class OpenAPI {
 
-    public static void main(String[] args) throws IOException
+    private final xmlClass xmlClass;
+
+    public List<MapListDto> getApi()
     {
-        // 1. URL을 만들기 위한 StringBuilder.
-        StringBuilder urlBuilder = new StringBuilder("http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade?_wadl&type=xml"); /*URL*/
-        // 2. 오픈 API의요청 규격에 맞는 파라미터 생성, 발급받은 인증키.
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=PCySEEr1WyKeyQISJ1EU3rwz8SzcDRiKI4HPij6a%2FQtLx3MdwowTBUOWBpV%2FGoU6Y%2F1umQClM2%2FFmqyul3iaAA%3D%3D"); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("LAWD_CD","UTF-8") + "=" + URLEncoder.encode("11110", "UTF-8")); /*각 지역별 코드*/
-        urlBuilder.append("&" + URLEncoder.encode("DEAL_YMD","UTF-8") + "=" + URLEncoder.encode("201512", "UTF-8")); /*월 단위 신고자료*/
-        // 3. URL 객체 생성.
-        URL url = new URL(urlBuilder.toString());
-        // 4. 요청하고자 하는 URL과 통신하기 위한 Connection 객체 생성.
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        // 5. 통신을 위한 메소드 SET.
-        conn.setRequestMethod("GET");
-        // 6. 통신을 위한 Content-type SET.
-        conn.setRequestProperty("Content-type", "application/json");
-        // 7. 통신 응답 코드 확인.
-        System.out.println("Response code: " + conn.getResponseCode());
-        // 8. 전달받은 데이터를 BufferedReader 객체로 저장.
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        try {
+            StringBuilder urlBuilder = new StringBuilder("http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev"); /*URL*/
+            urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + ServiceKey.Key); /*Service Key*/
+//        urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+            urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수*/
+            int code = Integer.parseInt("11110");
+            urlBuilder.append("&" + URLEncoder.encode("LAWD_CD", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(code), "UTF-8")); /*지역코드*/
+            urlBuilder.append("&" + URLEncoder.encode("DEAL_YMD", "UTF-8") + "=" + URLEncoder.encode("201502", "UTF-8")); /*계약월*/
+
+            DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactoty.newDocumentBuilder();
+            Document doc = dBuilder.parse(urlBuilder.toString());
+
+            return xmlClass.parser(doc);
+
+        } catch (Exception e) {
+            log.error("error", e);
+            throw new RuntimeException();
         }
-        // 9. 저장된 데이터를 라인별로 읽어 StringBuilder 객체로 저장.
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        // 10. 객체 해제.
-        rd.close();
-        conn.disconnect();
-        // 11. 전달받은 데이터 확인.
-        System.out.println(sb.toString());
     }
+
 }
