@@ -21,10 +21,10 @@ public class AddressController {
     {
         List<Address> addresses = addressService.AllAddressService();
 
-        for(Address ad : addresses)
-        {
-            log.info(ad.getName() + " " + ad.getCode());
-        }
+//        for(Address ad : addresses)
+//        {
+//            log.info(ad.getName() + " " + ad.getCode());
+//        }
 
         return addressService.AllAddressService();
     }
