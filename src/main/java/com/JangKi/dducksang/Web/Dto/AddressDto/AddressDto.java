@@ -23,4 +23,15 @@ public class AddressDto {
             this.name = entity.getName();
         }
     }
+
+    @Getter
+    @NoArgsConstructor
+    public static class SiGunGuAddress{
+        private String sigungu;
+
+        public SiGunGuAddress(Address entity)
+        {
+            this.sigungu = entity.getName();
+        }
+    }
 }
