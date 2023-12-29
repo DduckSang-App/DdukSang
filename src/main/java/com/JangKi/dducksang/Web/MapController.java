@@ -65,17 +65,15 @@ public class MapController {
                     String[] split = line.split("\t");
                     map.put(split[0], split[1]);
                 }
-
-//                System.out.println(map.size());
             }
             for (String key : map.keySet()) {
 
                     Long code = Long.valueOf(key);
                     String addr = map.get(key);
-//
-//                    System.out.println(code + " " + addr);
+
+                    System.out.println(code + " " + addr);
                     Address address = new Address(code, addr);
-//
+
                     addressRepo.save(address);
             }
         } catch (FileNotFoundException e) {
