@@ -12,6 +12,6 @@ public interface AddressRepo extends JpaRepository<Address, Long> {
     @Query("SELECT a FROM Address a order by a.code DESC")
     List<Address> AddressList();
 
-    @Query("SELECT a FROM Address a WHERE a.located_nm LIKE %:SiGunGu% order by a.located_nm ASC")
+    @Query("SELECT a FROM Address a WHERE a.name LIKE %:SiGunGu% order by a.name ASC")
     List<AddressDto.AddressInfoDto> SiGunGuList(@Param("SiGunGu") String SiGunGu);
 }
