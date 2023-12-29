@@ -16,17 +16,36 @@ import lombok.NoArgsConstructor;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Add_ID;
+    private Long ID;
 
-//    @Column(columnDefinition = "TEXT")
-    Long code; // 법정동 코드
+    Long code;
 
-//    @Column(columnDefinition = "TEXT")
-    String name; // 법정동명
+    @Column(columnDefinition = "TEXT")
+    String located_nm; // 전체지역 이름
 
-    public Address(Long code, String name)
+    @Column(columnDefinition = "TEXT")
+    String locate_v1;
+
+    @Column(columnDefinition = "TEXT")
+    String locate_v2;
+
+    @Column(columnDefinition = "TEXT")
+    String locate_v3;
+
+    @Column(columnDefinition = "TEXT")
+    String locate_v4;
+
+    @Column(columnDefinition = "TEXT")
+    String locate_v5;
+
+    public Address(Long code, String located_nm, String locate_v1,String locate_v2, String locate_v3, String locate_v4, String locate_v5)
     {
         this.code = code;
-        this.name = name;
+        this.located_nm = located_nm;
+        this.locate_v1 = locate_v1;
+        this.locate_v2 = locate_v2;
+        this.locate_v3 = locate_v3;
+        this.locate_v4 = locate_v4;
+        this.locate_v5 = locate_v5;
     }
 }
