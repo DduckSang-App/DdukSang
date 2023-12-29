@@ -108,6 +108,8 @@ body
 
 #### JPA Batch Size, JDBCTemplate Batch Insert, Mybatis batch insert 성능 비교
 
+> 실제로 일반적인 insert 수행 시, 20,651개의 행정코드 주소 저장하는데 5m 5.34s가 걸림
+
  - 고민해 볼 부분 : 만약 업데이트 됐을 때 - 기존값과 추가된 값을 어떻게 표시할 건지
 </details>
 
