@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,8 +52,6 @@ public class MapController {
     @PostMapping("/SaveAddressCode")
     public Object save_code() {
         try {
-            Map<String, String> map = new HashMap<>();
-
             URL resource = getClass().getClassLoader().getResource("AddressList.txt");
             File file = ResourceUtils.getFile(resource.getFile());
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
@@ -63,18 +62,31 @@ public class MapController {
                     continue;
                 } else {
                     String[] split = line.split("\t");
-                    map.put(split[0], split[1]);
-                }
-            }
-            for (String key : map.keySet()) {
 
-                    Long code = Long.valueOf(key);
-                    String addr = map.get(key);
+                    // split 0번은 코드, 1번은 지역 주소
+                    Long code = Long.valueOf(split[0]);
 
-                    System.out.println(code + " " + addr);
-                    Address address = new Address(code, addr);
+                    String tmp = split[1];
+//                    StringTokenizer st = new StringTokenizer(split[1]);
+
+                    String[] tmp2 = tmp.split(" ");
+
+                    String locateNM = tmp; // 제주도 / 북제주군 / 조천면 / 조천리
+
+                    String locate[] = {"", "", "", "", ""};
+
+                    int idx = 0;
+
+                    for(String x : tmp2)
+                    {
+                        locate[idx] = x;
+                        idx++;
+                    }
+
+                    Address address = new Address(code, locateNM, locate[0], locate[1], locate[2], locate[3], locate[4]);
 
                     addressRepo.save(address);
+                }
             }
         } catch (FileNotFoundException e) {
 

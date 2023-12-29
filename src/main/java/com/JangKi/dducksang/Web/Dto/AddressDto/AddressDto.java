@@ -18,9 +18,9 @@ public class AddressDto {
 
         public AddressInfoDto(Address entity)
         {
-            this.id = entity.getAdd_ID();
+            this.id = entity.getID();
             this.code = entity.getCode();
-            this.name = entity.getName();
+            this.name = entity.getLocated_nm();
         }
     }
 
@@ -31,7 +31,7 @@ public class AddressDto {
 
         public SiGunGuAddress(Address entity)
         {
-            this.sigungu = entity.getName();
+            this.sigungu = entity.getLocated_nm();
         }
     }
 }
