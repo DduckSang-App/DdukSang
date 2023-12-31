@@ -12,6 +12,8 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     {
         registry.addMapping("/**")
                 .allowedMethods("*")
-                .allowedOrigins("*");
+                .allowedOrigins("*")
+                .allowedHeaders("Content-Type")
+                .allowCredentials(true);
     }
 }
