@@ -17,6 +17,7 @@ public class AddressController {
 
     private final AddressService addressService;
 
+    @CrossOrigin(origins = "http://ec2-15-164-32-179.ap-northeast-2.compute.amazonaws.com:8080/SearchSigungu", methods = RequestMethod.GET)
     @GetMapping("/allAddress")
     public List<Address> findAllAdress()
     {
@@ -30,6 +31,7 @@ public class AddressController {
         return addressService.AllAddressService();
     }
 
+    @CrossOrigin(origins = "http://ec2-15-164-32-179.ap-northeast-2.compute.amazonaws.com:8080/SearchSigungu", methods = RequestMethod.POST)
     @PostMapping("/SearchSigungu")
     public List<AddressDto.AddressInfoDto> findSiGungu(@RequestBody AddressRequestDto.SigunguRequestDto city)
     {
