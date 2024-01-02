@@ -16,11 +16,23 @@ public class AddressDto {
 
         private String name;
 
+        private String name_v1;
+
+        private String name_v2;
+
+        private String name_v3;
+
+        private String name_v4;
+
         public AddressInfoDto(Address entity)
         {
             this.id = entity.getID();
             this.code = entity.getCode();
             this.name = entity.getLocated_nm();
+            this.name_v1 = entity.getLocate_v1();
+            this.name_v2 = entity.getLocate_v2();
+            this.name_v3 = entity.getLocate_v3();
+            this.name_v4 = entity.getLocate_v4();
         }
     }
 

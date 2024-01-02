@@ -31,15 +31,14 @@ public class OpenAPI {
 
     private final xmlClass xmlClass;
 
-    public List<MapListDto> getApi()
+    public List<MapListDto> getApi(String code)
     {
         try {
             StringBuilder urlBuilder = new StringBuilder("http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev"); /*URL*/
             urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + ServiceKey.Key); /*Service Key*/
             urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
             urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수*/
-            int code = Integer.parseInt("11110");
-            urlBuilder.append("&" + URLEncoder.encode("LAWD_CD", "UTF-8") + "=" + URLEncoder.encode(String.valueOf(code), "UTF-8")); /*지역코드*/
+            urlBuilder.append("&" + URLEncoder.encode("LAWD_CD", "UTF-8") + "=" + URLEncoder.encode(code, "UTF-8")); /*지역코드*/
             urlBuilder.append("&" + URLEncoder.encode("DEAL_YMD", "UTF-8") + "=" + URLEncoder.encode("201502", "UTF-8")); /*계약월*/
 
             DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
