@@ -1,5 +1,5 @@
 ### API Model GitIgnore
-**/src/main/java/com/JangKi/dduckSang/APImodel/ServiceKey
+**/src/main/java/com/JangKi/dduckSang/APImodel/ServiceKey.java
 
 **/src/main/java/com/JangKi/dduckSang/Web/TestController.java
 
