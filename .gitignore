@@ -1,6 +1,7 @@
 ### API Model GitIgnore
-**/src/main/java/com/JangKi/dduckSang/APImode/ServiceKey
+**/src/main/java/com/JangKi/dduckSang/APImodel/ServiceKey
 
+**/src/main/java/com/JangKi/dduckSang/Web/TestController.java
 
 HELP.md
 .gradle
