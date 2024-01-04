@@ -38,6 +38,7 @@ public class Address {
     @Column(columnDefinition = "TEXT")
     String locate_v5;
 
+    @Builder
     public Address(Long code, String located_nm, String locate_v1,String locate_v2, String locate_v3, String locate_v4, String locate_v5)
     {
         this.code = code;

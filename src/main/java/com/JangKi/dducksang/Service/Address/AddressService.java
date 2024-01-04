@@ -16,13 +16,13 @@ public class AddressService {
 
     private final AddressRepo addressRepo;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Address> AllAddressService() {
         return addressRepo.AddressList();
     }
 
     // 시군구 검색
-    @Transactional
+    @Transactional(readOnly = true)
     public List<AddressDto.AddressInfoDto> SiGunGuSearchService(String city)
     {
         return addressRepo.SiGunGuList(city);
