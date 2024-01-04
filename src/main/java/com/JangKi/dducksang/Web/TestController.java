@@ -4,6 +4,7 @@ package com.JangKi.dducksang.Web;
 
 
 import com.JangKi.dducksang.APImodel.OpenAPI;
+import com.JangKi.dducksang.Web.Dto.AddressDto.AddressDto;
 import com.JangKi.dducksang.Web.Dto.Map.MapListDto;
 import com.JangKi.dducksang.domain.Address.Repository.Address;
 import com.JangKi.dducksang.domain.Address.Repository.AddressRepo;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,6 +39,7 @@ public class TestController {
     @PostMapping("/SaveAddressCode")
     public Object save_code() {
         try {
+            List<Address> addresses = new ArrayList<>();
             URL resource = getClass().getClassLoader().getResource("AddressList.txt");
             File file = ResourceUtils.getFile(resource.getFile());
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
@@ -46,13 +49,15 @@ public class TestController {
                 if (line.contains("폐지")) {
                     continue;
                 } else {
+
                     String[] split = line.split("\t");
 
                     // split 0번은 코드, 1번은 지역 주소
                     Long code = Long.valueOf(split[0]);
 
+//                    log.info(code + " ");
+
                     String tmp = split[1];
-//                    StringTokenizer st = new StringTokenizer(split[1]);
 
                     String[] tmp2 = tmp.split(" ");
 
@@ -62,17 +67,18 @@ public class TestController {
 
                     int idx = 0;
 
-                    for(String x : tmp2)
-                    {
+                    for (String x : tmp2) {
                         locate[idx] = x;
                         idx++;
                     }
 
-                    Address address = new Address(code, locateNM, locate[0], locate[1], locate[2], locate[3], locate[4]);
+                    AddressDto.AddressInfoDto addressInfoDto = new AddressDto.AddressInfoDto(code, locateNM, locate[0], locate[1], locate[2], locate[3]);
 
-                    addressRepo.save(address);
+                    addresses.add(addressInfoDto.toEntity());
                 }
             }
+            addressRepo.saveAll(addresses);
+
         } catch (FileNotFoundException e) {
 
         } catch (IOException e) {
@@ -106,10 +112,9 @@ public class TestController {
 
             for(String setCode : codeSet) {
 
-                List<MapListDto> saveList = openAPI.getApi(setCode);
+                List<MapListDto> saveList = openAPI.getApi("setCode", "1");
 
                 log.info(setCode + " " + "svaveList Size : " + saveList.size() );
-
             }
         }
         catch (Exception e)
