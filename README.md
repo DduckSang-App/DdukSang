@@ -75,6 +75,9 @@ body
 
 ### ERD 다이어그램
 
+![image](https://github.com/DduckSang-App/DdukSang/assets/75063989/d4716304-7369-4bbe-9ec4-f2b58cba5db8)
+
+
 <hr>
 
 ### 아키텍처 구조
@@ -104,13 +107,49 @@ body
  - 이미 저장되어 있을 경우, update[1달 기준] 날짜를 통해서 알려준다.
 
 
-### 문제점 2 : DB Insert 시, 99999개 DB기준 14초 가 걸린다.
+### 문제점 2 : DB Insert 시, 20651개 DB기준 5분 30초가 걸린다.
 
 #### JPA Batch Size, JDBCTemplate Batch Insert, Mybatis batch insert 성능 비교
 
-> 실제로 일반적인 insert 수행 시, 20,651개의 행정코드 주소 저장하는데 5m 5.34s가 걸림
+> 실제로 일반적인 insert 수행 시, 20,651개의 행정코드 주소 저장하는데 5m 5.34s가 걸림 서버 기준 약 30분 <br>
+> ![image](https://github.com/DduckSang-App/DdukSang/assets/75063989/b8de1447-f0aa-483c-b16b-3c264c19b2e5)
+
+### * 실제 테스트 내용 [일반적인 Insert 수행 시 제외] - Mockito && Junit 테스트 코드 사용
+
+1. 받아 들어오는 데이터를 List 형태로 저장후 saveAll 명령어 성능
+
+> 코드 비교 <br>
+> ![image](https://github.com/DduckSang-App/DdukSang/assets/75063989/f65b4697-3848-4f9b-98ee-aaa3aeda2085)
+
+> 실제 성능은 13m이 걸려서 더욱 더 안좋은 성능을 맞이했다 <br>
+> 이 경우, 원래 save() 함수가 트랙잭션을 하나씩 연결시켜 더 오래 걸린다고 알고있다. <br>
+> 다시 시도해보고 남길 예정입니다. <br>
+> ![image](https://github.com/DduckSang-App/DdukSang/assets/75063989/baba1224-1dbf-4e49-94ab-3ea2f1c89ee6)
+
+2. 응답값을 DTO로 변환시킨후 Builder 패턴 사용
+> 테스트 측정 시간 2573ms
+> ![image](https://github.com/DduckSang-App/DdukSang/assets/75063989/029a7335-7b26-495c-b121-cdfaf4039ce3)
+
+> 실제 API 테스트 측정 시간 7.82s
+> ![image](https://github.com/DduckSang-App/DdukSang/assets/75063989/f1d78810-5cb4-4089-a7e0-c097a9bbd73f)
+
+> 서버 테스트 35m -> 5m
+> ![image](https://github.com/DduckSang-App/DdukSang/assets/75063989/7d1c80df-7350-4fa6-bd00-b4ce9da359d5)
+
+> Builder 패턴을 사용할 시, 13000ms -> 782s로 놀라운 향상을 보였다.
+
+
+3. 추가적인 작업
+> JPA Batch Insert를 통해서 대량의 SQL 그룹을 만들어서 보내면 더 빨라지지 않을까라고 생각하였다. [multi-value insert]
+> 그런데 JPA Batch Insert에서는 쓰기 지연을 통해서 동작한다. -> 기존 데이터베이스 ID 저장 방식은 저장 된 뒤 id가 할당된다. -> IDENTITY 방식 도입이 불가능하다.
+> 기존 ID 전략 vs Batch Insert ID 전략에 대해서는 생각해보아야한다. [Mysql이 Sequence 전략을 사용 못하기 떄문]
+> 따라서, 기존 IDENTITY 전략을 이용한 JDBC Template를 활용해서 Batch Insert를 진행해본다.
+> 현재 코드 오류로 인해서 추가 수정 할 예정
+
+<hr>
 
  - 고민해 볼 부분 : 만약 업데이트 됐을 때 - 기존값과 추가된 값을 어떻게 표시할 건지
+> 이 부분에 대해서는 지역 주소가 담긴 부분에 대해서 1:N으로 매물을 년/월 별로 나눠줄 예정
 </details>
 
 ## 2. 공공API -> 주소만 가지고 있는 문제
