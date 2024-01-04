@@ -136,7 +136,7 @@ body
 > 서버 테스트 35m -> 5m
 > ![image](https://github.com/DduckSang-App/DdukSang/assets/75063989/7d1c80df-7350-4fa6-bd00-b4ce9da359d5)
 
-> Builder 패턴을 사용할 시, 13000ms -> 782s로 놀라운 향상을 보였다.
+> Builder 패턴을 사용할 시, 13000ms -> 5782ms로 놀라운 향상을 보였다.
 
 
 3. 추가적인 작업
