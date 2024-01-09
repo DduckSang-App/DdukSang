@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MapListDto {
+
     private int amount;//거래금액
 
     private int buildYear;//건축년도
@@ -32,4 +33,19 @@ public class MapListDto {
     private double dedicatedArea; //전용면적
 
     private int floor; //층
+
+    public MapListDto(int amount, int buildYear, int dealYear, int dealMonth, int dealDay, int sigunguCode, int eupmyundongCode, String dong, String aptName, double dedicatedArea, int floor)
+    {
+        this.amount = amount;
+        this.buildYear =buildYear;
+        this.dealYear = dealYear;
+        this.dealMonth = dealMonth;
+        this.dealDay = dealDay;
+        this.sigunguCode = sigunguCode;
+        this.eupmyundongCode = eupmyundongCode;
+        this.dong = dong;
+        this.aptName = aptName;
+        this.dedicatedArea = dedicatedArea;
+        this.floor = floor;
+    }
 }
