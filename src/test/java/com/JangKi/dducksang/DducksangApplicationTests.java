@@ -33,8 +33,8 @@ class DducksangApplicationTests {
 
 	@Autowired
 	AddressRepo addressRepo;
-//
-//	@Autowired
+
+	//	@Autowired
 //	JDBCAddressRepo jdbcAddressRepo;
 ////
 //	@Autowired
@@ -79,7 +79,10 @@ class DducksangApplicationTests {
 					idx++;
 				}
 
-				Address address = new Address(code, locateNM, locate[0], locate[1], locate[2], locate[3], locate[4]);
+				Address address = new Address();
+
+
+
 				addressRepo.save(address);
 				expectedCount++;
 			}
