@@ -165,3 +165,45 @@ body
 DB에 y,x 값 저장 예정
 
 </details>
+
+## 3. DB의 연결성 문제
+<details>
+
+<summary>관련 내용</summary>
+
+1. Building [건물 정보] -> Sales[판매 정보]
+> 이 부분에 대해서는 다양한 시도를 해볼 예정이다.
+ 
+1.건물 정보를 저장할 때 count()나 last_insert_id()를 통해서 구현 [ 불가능 ]
+> 불가능인 부분은 last_insert_id()가 multi-insert query에서는 count가 하나로 체크가 된다. <br> -> 이 부분은 어렵게 접근하였다.
+> 마지막에 ID를 반환해주는 것으로 쉽게 해결된다....! 
+
+> count()를 했을 때, 매번 행의 개수를 세준다면 -> 엄청 큰 데이터들이 모여있다면 낭비가 심하다.<br>
+> 또한, 해당 값을 통해서 중복된 건물에 대해서 불가피한 쿼리가 나타난다.
+
+2. 아파트 이름을 기준점으로 삼아서 Sales 데이터를 넣는다. [ 진행중 ]
+> 현재 이 방법으로 unique한 Building과 Sales 관계를 1 : N으로 엮을 수 있다고 판단. <br>
+> 하지만 이 방법은 건설사에 따라 아파트명이 똑같은 경우들이 많기 때문에, 시군구코드와, 읍면동코드, 아파트이름 3개를 묶어서 판단 시키기로 결정했다.
+
+
+</details>
+
+<hr>
+
+## 실수하면 안되는 부분 & 새롭게 알아가는 부분
+
+#### 1. String -> LocalDate Parsing
+<details>
+<summary>관련 내용</summary>
+
+> Integer 형태의 변수를 Date Type으로 파싱하려던 중 오류를 맞이하였다. <br>
+> DateTimeFormatter.ofPattern 사용 할 시, 원하는 형태로 출력을 마무리할 수 있다. <br>
+> 하지만, 날짜의 경우 "yyyy-MM-dd" ISO_LOCAL_DATE의 기본 타입을 유지해야하기 때문에, 2019-3-05 같은 경우 index parsing 에러가 발생. <br>
+> 따라서 LocalDate의 객체를 만들어 줌으로써 해결할 수 있었다.
+
+하지만, 년도만 입력 받을 때는 에러가 발생한다.
+> 기본적으로 LocalDate(Date)의 기본적인 형식은 "yyyy-mm-dd" 형식으로 들어가기 때문에, mm-dd형태를 0으로 잡는 형식으로 진행. <br>
+> -> Year type으로 받으면 해결되는 문제였다..
+
+
+</details>
