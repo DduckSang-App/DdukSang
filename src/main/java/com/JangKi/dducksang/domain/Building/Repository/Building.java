@@ -1,11 +1,19 @@
 package com.JangKi.dducksang.domain.Building.Repository;
 
+import com.JangKi.dducksang.domain.Address.Repository.Address;
+import com.JangKi.dducksang.domain.Sales.Sales;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
+import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,23 +23,14 @@ import java.util.List;
 public class Building {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     @Column
-    private int amount;//거래금액
+    private Year buildYear;//건축년도
 
     @Column
-    private int buildYear;//건축년도
-
-    @Column
-    private int dealYear; //년
-
-    @Column
-    private int dealMonth; //월
-
-    @Column
-    private int dealDay; //일
+    private Long code; // 전체 코드
 
     @Column
     private int sigunguCode; //법정동시군구코드
@@ -46,28 +45,35 @@ public class Building {
     private String dong; //법정동
 
     @Column
-    private String aptName; //아파트
+    private String aptName; //아파트 이름
 
-    @Column
-    private double dedicatedArea; //전용면적
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "AddressID")
+    @JsonBackReference(value = "relation-Address-Building")
+    private Address address;
 
-    @Column
-    private int floor; //층
+    @JsonManagedReference(value = "relation-Building-Sales")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "building", orphanRemoval = true)
+    private List<Sales> salesList = new ArrayList<>();
 
     @Builder
-    public Building(int amount, int buildYear, int dealYear, int dealMonth, int dealDay, int sigunguCode, int eupmyundongCode, String sigungu, String dong, String aptName, double dedicatedArea, int floor)
+    public Building(Year buildYear, Long code, int sigunguCode, int eupmyundongCode, String sigungu, String dong, String aptName, Address address, List<Sales> salesList)
     {
-        this.amount = amount;
         this.buildYear = buildYear;
-        this.dealYear = dealYear;
-        this.dealMonth = dealMonth;
-        this.dealDay = dealDay;
+        this.code = code;
         this.sigunguCode = sigunguCode;
         this.eupmyundongCode = eupmyundongCode;
         this.sigungu = sigungu;
         this.dong = dong;
         this.aptName = aptName;
-        this.dedicatedArea = dedicatedArea;
-        this.floor = floor;
+        this.address = address;
+        this.salesList = salesList;
+    }
+
+
+    // For test Args
+    public void updateID(Long id)
+    {
+        this.Id = id;
     }
 }
