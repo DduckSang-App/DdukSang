@@ -112,7 +112,7 @@ public class TestController {
 
             for(String setCode : codeSet) {
 
-                List<MapListDto> saveList = openAPI.getApi("setCode", "1");
+                List<MapListDto> saveList = openAPI.getApi("setCode", "201502", "1");
 
                 log.info(setCode + " " + "svaveList Size : " + saveList.size() );
             }
