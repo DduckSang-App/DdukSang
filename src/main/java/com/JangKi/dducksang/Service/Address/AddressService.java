@@ -27,4 +27,11 @@ public class AddressService {
     {
         return addressRepo.SiGunGuList(city);
     }
+
+    // code -> ID 반환
+    @Transactional(readOnly = true)
+    public Address searchSigunguCode(Long cityCode)
+    {
+        return addressRepo.searchCode(cityCode);
+    }
 }
