@@ -13,7 +13,7 @@
 
 ### 📍 Development Schedule
 - JIRA 기반 Git 관리
-- AWS or GCP 클라우드 [미정]
+- AWS EC2 & RDS
 - Github Action or jenkins [미정]
 
 <hr>
@@ -181,10 +181,38 @@ DB에 y,x 값 저장 예정
 > count()를 했을 때, 매번 행의 개수를 세준다면 -> 엄청 큰 데이터들이 모여있다면 낭비가 심하다.<br>
 > 또한, 해당 값을 통해서 중복된 건물에 대해서 불가피한 쿼리가 나타난다.
 
+<br>
+따라서 Exists를 이용하는 방안으로 1차 접근. <br>
+-> 하지만, JPA의 경우 EXISTS를 지원하지 않으므로, QueryDSL 사용
+
+>  /*
+> SELECT EXISTS( <br>
+SELECT 1<br>
+FROM address<br>
+WHERE located_nm LIKE "%서울특별시 종로구1%"<br>
+)*
+
+<br><br>
+
 2. 아파트 이름을 기준점으로 삼아서 Sales 데이터를 넣는다. [ 진행중 ]
 > 현재 이 방법으로 unique한 Building과 Sales 관계를 1 : N으로 엮을 수 있다고 판단. <br>
 > 하지만 이 방법은 건설사에 따라 아파트명이 똑같은 경우들이 많기 때문에, 시군구코드와, 읍면동코드, 아파트이름 3개를 묶어서 판단 시키기로 결정했다.
 
+3. 공공API를 받아왔을 때, Address-Building-Sales를 효율적으로 연결시키는 방안
+> 현재 API를 받아왔을 때, Address-Building / Building-Sales를 DB에 접근해서 있는지 확인하는 과정이 필요<br>
+> 이 부분을 Redis나 Elastic Search를 이용해서 조금 더 효율적으로 짤 수 있지 않을까? 라는 고민중....
+
+</details>
+
+## 4. 순환 참조 문제
+<details>
+<summary>관련 내용</summary>
+
+![image](https://github.com/DduckSang-App/DdukSang/assets/75063989/81dd2ae8-a24e-4d8c-b71d-31c904f5c398)
+
+> 위의 부분에서 single Circular References [순환 참조] 문제가 발생하였다. <br>
+> 그 이유는, BuildingService는 Bean으로 등록이 되려면 해당 Service안에 BuildingService가 Bean으로 등록이 되어야한다. <br>
+> 이렇게 되면 서로를 순환참조 하기 때문에 어떠한 Bean도 생성하지 못한다.
 
 </details>
 
@@ -192,7 +220,7 @@ DB에 y,x 값 저장 예정
 
 ## 실수하면 안되는 부분 & 새롭게 알아가는 부분
 
-#### 1. String -> LocalDate Parsing
+### 1. String -> LocalDate Parsing
 <details>
 <summary>관련 내용</summary>
 
@@ -205,5 +233,14 @@ DB에 y,x 값 저장 예정
 > 기본적으로 LocalDate(Date)의 기본적인 형식은 "yyyy-mm-dd" 형식으로 들어가기 때문에, mm-dd형태를 0으로 잡는 형식으로 진행. <br>
 > -> Year type으로 받으면 해결되는 문제였다..
 
+
+</details>
+
+### 2. QuereyDSL
+
+<details>
+<summary>관련 내용</summary>
+
+[QueryDSL 도입 관련](https://velog.io/@soyeon207/QueryDSL-Spring-Boot-%EC%97%90%EC%84%9C-QueryDSL-JPA-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0)
 
 </details>
