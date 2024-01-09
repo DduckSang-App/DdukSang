@@ -38,7 +38,7 @@ public class MapController {
     @GetMapping("/jsonAPI")
     public List<MapListDto> search()
     {
-        List<MapListDto> list = openAPI.getApi("11110", "1");
+        List<MapListDto> list = openAPI.getApi("11110", "201502", "1");
 
         log.info("list sizeE : " + list.size());
 
