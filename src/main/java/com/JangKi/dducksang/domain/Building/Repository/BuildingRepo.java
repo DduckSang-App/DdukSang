@@ -11,8 +11,6 @@ public interface BuildingRepo extends JpaRepository<Building, Long>, BuildingRep
     @Query("SELECT b FROM Building b WHERE b.sigunguCode = :sigunguCode and b.eupmyundongCode = :eupmyundongCode and b.aptName = :aptName")
     Building searchBuilding(@Param("sigunguCode") int sigunguCode, @Param("eupmyundongCode") int eupmyundongCode, @Param("aptName") String aptName);
 
-//    @Query("SELECT EXISTS (SELECT a.* FROM Address a WHERE a.)")
-
-    @Query("SELECT EXISTS (SELECT b FROM Building b where b.sigunguCode = :sigunguCode and b.eupmyundongCode = :eupmyundongCode and b.aptName = :aptName)")
-    Long ExistsBuilding(@Param("sigunguCode") int sigunguCode, @Param("eupmyundongCode") int eupmyundongCode, @Param("aptName") String aptName);
+    @Query("SELECT b FROM Building b WHERE b.Id = :Id")
+    Building returnBuilding(@Param("Id") Long Id);
 }
