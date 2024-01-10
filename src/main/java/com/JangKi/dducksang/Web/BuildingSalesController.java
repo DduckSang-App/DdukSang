@@ -9,6 +9,7 @@ import com.JangKi.dducksang.Web.Dto.Map.MapListDto;
 import com.JangKi.dducksang.Web.Dto.SalesDto.SalesRequestDto;
 import com.JangKi.dducksang.Web.Dto.SalesDto.SalesResponseDto;
 import com.JangKi.dducksang.domain.Building.Repository.Building;
+import com.JangKi.dducksang.domain.Sales.Sales;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -76,7 +77,7 @@ public class BuildingSalesController {
         int sigunguCode = Integer.valueOf(code.substring(0, 5));
         int epmundongCodee = Integer.valueOf(code.substring(5));
 
-        log.info(sigunguCode + " " + epmundongCodee);
+//        log.info(sigunguCode + " " + epmundongCodee);
         // 해당하는 Building 찾아주기
         List<Building> buildingList = buildingService.searchBuilding(sigunguCode, epmundongCodee);
 
@@ -88,22 +89,18 @@ public class BuildingSalesController {
 
             responseDto.setLocatedNM(locateStr);
 
-            log.info(building.getId() + " ");
+//            log.info(building.getId() + " ");
 
             // 해당 매물 조회
-//            List<Map<String, Object>> salesList = buildingService.InfoBuildingService(building.getId());
-            List<Map<String, Object>> salesList = salesService.InfoSalesList(building.getId());
+            List<Object> salesList = buildingService.InfoBuildingService(building.getId());
+//            List<Map<String, Object>> salesList = salesService.InfoSalesList(building.getId());
 
-//            responseDto.setSalesList(salesList);
-//
-//            for(Map<String, Object> m : salesList)
+            responseDto.setSalesList(salesList);
+//            for(Object o : salesList)
 //            {
-//                for(String key : m.keySet())
-//                {
-//                    log.info("KEY : " + key + "  ");
-//                }
+//                log.info(o.getClass().getName() + " " + o.getClass().getSimpleName());
 //            }
-//
+
             searchSalesList.add(responseDto);
         }
 

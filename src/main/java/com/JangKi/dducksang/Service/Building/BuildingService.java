@@ -7,6 +7,7 @@ import com.JangKi.dducksang.Web.Dto.Map.MapListDto;
 import com.JangKi.dducksang.domain.Address.Repository.Address;
 import com.JangKi.dducksang.domain.Building.Repository.Building;
 import com.JangKi.dducksang.domain.Building.Repository.BuildingRepo;
+import com.JangKi.dducksang.domain.Sales.Sales;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -94,7 +95,7 @@ public class BuildingService {
 
 
     @Transactional(readOnly = true)
-    public List<Map<String, Object>> InfoBuildingService(Long cityID)
+    public List<Object> InfoBuildingService(Long cityID)
     {
         return buildingRepo.buildingSalesList(cityID);
     }
