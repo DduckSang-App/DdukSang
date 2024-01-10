@@ -67,4 +67,6 @@ public class SalesRequestDto {
         private int dealMonth; // 계약월
     }
 
+
+
 }

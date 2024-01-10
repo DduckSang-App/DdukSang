@@ -34,4 +34,11 @@ public class AddressService {
     {
         return addressRepo.searchCode(cityCode);
     }
+
+    //
+    @Transactional(readOnly = true)
+    public Long searchCityCode(String cityName)
+    {
+        return addressRepo.searchAddressCode(cityName);
+    }
 }

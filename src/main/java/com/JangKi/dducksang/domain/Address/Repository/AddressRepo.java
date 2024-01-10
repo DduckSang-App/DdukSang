@@ -21,4 +21,7 @@ public interface AddressRepo extends JpaRepository<Address, Long> {
 
     @Query("SELECT a FROM Address a WHERE a.code = :city")
     Address searchCode(@Param("city") Long city);
+
+    @Query("SELECT a.code FROM Address a WHERE a.located_nm = :cityName")
+    Long searchAddressCode(@Param("cityName") String cityName);
 }
