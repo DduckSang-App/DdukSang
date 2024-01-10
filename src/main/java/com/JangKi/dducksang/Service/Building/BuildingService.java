@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Year;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -90,4 +91,18 @@ public class BuildingService {
     {
         return buildingRepo.returnBuilding(ID);
     }
+
+
+    @Transactional(readOnly = true)
+    public List<Map<String, Object>> InfoBuildingService(Long cityID)
+    {
+        return buildingRepo.buildingSalesList(cityID);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Building> searchBuilding(int siCode, int epCode)
+    {
+        return buildingRepo.searchBuildingByCode(siCode, epCode);
+    }
+
 }

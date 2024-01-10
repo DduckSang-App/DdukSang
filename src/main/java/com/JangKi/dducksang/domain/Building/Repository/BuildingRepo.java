@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+
 @Repository
 public interface BuildingRepo extends JpaRepository<Building, Long>, BuildingRepoCustom{
 
@@ -13,4 +16,10 @@ public interface BuildingRepo extends JpaRepository<Building, Long>, BuildingRep
 
     @Query("SELECT b FROM Building b WHERE b.Id = :Id")
     Building returnBuilding(@Param("Id") Long Id);
+
+    @Query("SELECT s FROM Building b inner join Sales s on b.Id = s.building.Id where b.Id = :cityID")
+    List<Map<String, Object>> buildingSalesList(@Param("cityID") Long cityID);
+
+    @Query("SELECT b FROM Building b WHERE b.sigunguCode = :siCode and b.eupmyundongCode = :epCode")
+    List<Building> searchBuildingByCode(@Param("siCode") int siCode, @Param("epCode") int epCode);
 }
