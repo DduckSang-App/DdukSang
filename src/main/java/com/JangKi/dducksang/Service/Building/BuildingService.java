@@ -25,8 +25,6 @@ public class BuildingService {
 
     private final AddressService addressService;
 
-    private final BuildingService buildingService;
-
     private final OpenAPI openAPI;
 
     @Transactional
@@ -76,14 +74,20 @@ public class BuildingService {
 
             Building saveBuilding = buildingSaveDto.toEntity();
 
-            BuildingID = buildingService.save(saveBuilding);
+            BuildingID = save(saveBuilding);
         }
 
         else{
-            Building building = buildingService.searchBuildingID(mapListDto.getSigunguCode(), mapListDto.getEupmyundongCode(),mapListDto.getAptName());
+            Building building = searchBuildingID(mapListDto.getSigunguCode(), mapListDto.getEupmyundongCode(),mapListDto.getAptName());
             BuildingID = building.getId();
         }
 
         return BuildingID;
+    }
+
+    @Transactional(readOnly = true)
+    public Building returnBuilding(Long ID)
+    {
+        return buildingRepo.returnBuilding(ID);
     }
 }
