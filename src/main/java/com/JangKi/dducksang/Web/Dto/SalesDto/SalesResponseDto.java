@@ -22,14 +22,14 @@ public class SalesResponseDto {
 
         String dong; // 동 이름
 
-        List<Map<String, Object>> salesList = new ArrayList<>();
+        List<Object> salesList = new ArrayList<>();
 
         public void setLocatedNM(String locatedNM)
         {
             this.locatedNM = locatedNM;
         }
 
-        public void setSalesList(List<Map<String, Object>> list)
+        public void setSalesList(List<Object> list)
         {
             this.salesList = list;
         }
