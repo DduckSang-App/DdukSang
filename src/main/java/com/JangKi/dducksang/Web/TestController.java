@@ -4,7 +4,11 @@ package com.JangKi.dducksang.Web;
 
 
 import com.JangKi.dducksang.APImodel.OpenAPI;
+import com.JangKi.dducksang.Service.Address.AddressService;
+import com.JangKi.dducksang.Service.Building.BuildingService;
 import com.JangKi.dducksang.Web.Dto.AddressDto.AddressDto;
+import com.JangKi.dducksang.Web.Dto.AddressDto.AddressRequestDto;
+import com.JangKi.dducksang.Web.Dto.BuildingDto.BuildingResponseDto;
 import com.JangKi.dducksang.Web.Dto.Map.MapListDto;
 import com.JangKi.dducksang.domain.Address.Repository.Address;
 import com.JangKi.dducksang.domain.Address.Repository.AddressRepo;
@@ -12,9 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.util.StopWatch;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.net.URL;
@@ -24,8 +28,8 @@ import java.util.List;
 import java.util.Set;
 
 @Slf4j
-@Controller
-public class TestController {
+@RestController
+    public class TestController {
     /*
     Address 주소 저장 API
     초기 INIT 설정임
@@ -35,6 +39,12 @@ public class TestController {
 
     @Autowired
     private OpenAPI openAPI;
+
+    @Autowired
+    private AddressService addressService;
+
+    @Autowired
+    private BuildingService buildingService;
 
     @PostMapping("/SaveAddressCode")
     public Object save_code() {
@@ -72,7 +82,7 @@ public class TestController {
                         idx++;
                     }
 
-                    AddressDto.AddressInfoDto addressInfoDto = new AddressDto.AddressInfoDto(code, locateNM, locate[0], locate[1], locate[2], locate[3]);
+                    AddressDto.AddressInfoDto addressInfoDto = new AddressDto.AddressInfoDto(code, locateNM, locate[0], locate[1], locate[2]);
 
                     addresses.add(addressInfoDto.toEntity());
                 }
@@ -124,5 +134,33 @@ public class TestController {
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
+//    @GetMapping("/searchAllTest")
+//    public void time1()
+//    {
+//        StopWatch stopWatch = new StopWatch();
+//        stopWatch.start();
+//
+//        Set<String> ret = addressService.searchAllService();
+//
+//        stopWatch.stop();
+//        log.info("All Search Query Execution TIME : " + stopWatch.prettyPrint());
+//
+//        stopWatch = new StopWatch();
+//        stopWatch.start();
+//
+//        List<String> ret2 = addressService.searchAllByDISTINCT();
+//
+//        stopWatch.stop();
+//        log.info("DISTINCT Query Execution TIME : " + stopWatch.prettyPrint());
+//
+//        stopWatch = new StopWatch();
+//        stopWatch.start();
+//
+//        List<String> ret3 = addressService.searchAllByGroupBY();
+//
+//        stopWatch.stop();
+//        log.info("GroupBY Query Execution TIME : " + stopWatch.prettyPrint());
+//    }
 
 }
