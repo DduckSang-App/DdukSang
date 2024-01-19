@@ -25,16 +25,13 @@ public class AddressDto {
 
         private String name_v3;
 
-        private String name_v4;
-
-        public AddressInfoDto(Long code, String name, String name_v1, String name_v2, String name_v3, String name_v4)
+        public AddressInfoDto(Long code, String name, String name_v1, String name_v2, String name_v3)
         {
             this.code = code;
             this.name = name;
             this.name_v1 = name_v1;
             this.name_v2 = name_v2;
             this.name_v3 = name_v3;
-            this.name_v4 = name_v4;
         }
 
         public AddressInfoDto(Address entity)
@@ -45,7 +42,6 @@ public class AddressDto {
             this.name_v1 = entity.getLocate_v1();
             this.name_v2 = entity.getLocate_v2();
             this.name_v3 = entity.getLocate_v3();
-            this.name_v4 = entity.getLocate_v4();
         }
 
         public Address toEntity()
@@ -56,21 +52,9 @@ public class AddressDto {
                     .locate_v1(name_v1)
                     .locate_v2(name_v2)
                     .locate_v3(name_v3)
-                    .locate_v4(name_v4)
                     .build();
         }
 
-//        public JDBCAddress toJDBCEntity()
-//        {
-//            return JDBCAddress.builder()
-//                    .code(code)
-//                    .located_nm(name)
-//                    .locate_v1(name_v1)
-//                    .locate_v2(name_v2)
-//                    .locate_v3(name_v3)
-//                    .locate_v4(name_v4)
-//                    .build();
-//        }
     }
 
     @Getter
@@ -82,5 +66,30 @@ public class AddressDto {
         {
             this.sigungu = entity.getLocated_nm();
         }
+    }
+
+    @Getter
+    @NoArgsConstructor
+    public static class searchAddressDto{
+        private String aptName;
+
+        private String locatedNM;
+
+        private int type; // type 1 -> 지역 , type 2-> 아파트
+
+        public searchAddressDto(String aptName, String locatedNM)
+        {
+            this.aptName = aptName;
+            this.locatedNM = locatedNM;
+            this.type = 2;
+        }
+
+        public searchAddressDto(String locatedNM)
+        {
+            this.locatedNM = locatedNM;
+            this.type = 1;
+            this.aptName = "";
+        }
+
     }
 }

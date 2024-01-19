@@ -11,13 +11,17 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AddressRepo extends JpaRepository<Address, Long> {
+public interface AddressRepo extends JpaRepository<Address, Long>, AddressRepoCustom{
 
     @Query("SELECT a FROM Address a order by a.code DESC")
     List<Address> AddressList();
 
     @Query("SELECT a FROM Address a WHERE a.located_nm LIKE %:SiGunGu% order by a.located_nm ASC")
     List<AddressDto.AddressInfoDto> SiGunGuList(@Param("SiGunGu") String SiGunGu);
+
+    @Query("SELECT a.located_nm FROM Address a WHERE a.located_nm LIKE %:SiGunGu% order by a.located_nm ASC")
+    List<String> locateList(@Param("SiGunGu") String SiGunGu);
+
 
     @Query("SELECT a FROM Address a WHERE a.code = :city")
     Address searchCode(@Param("city") Long city);
