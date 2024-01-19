@@ -6,8 +6,12 @@ import com.JangKi.dducksang.domain.Address.Repository.AddressRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,9 +27,14 @@ public class AddressService {
 
     // 시군구 검색
     @Transactional(readOnly = true)
-    public List<AddressDto.AddressInfoDto> SiGunGuSearchService(String city)
+    public List<AddressDto.searchAddressDto> SiGunGuSearchService(String city)
     {
-        return addressRepo.SiGunGuList(city);
+        List<AddressDto.searchAddressDto> sidongList = addressRepo.SiGunGuList(city).stream()
+            .map(addressInfoDto -> {
+                return new AddressDto.searchAddressDto(addressInfoDto.getName());
+            }).collect(Collectors.toList());
+
+        return sidongList;
     }
 
     // code -> ID 반환

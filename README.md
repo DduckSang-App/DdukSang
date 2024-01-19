@@ -46,6 +46,7 @@ type: subject
 body
 ```
 
+
 #### type
 
 - 하나의 커밋에 여러 타입이 존재하는 경우 상위 우선순위의 타입을 사용한다.
@@ -93,6 +94,7 @@ body
 ## 1. 대용량의 데이터 저장
 
 <details>
+
 
 <summary> 관련 내용 </summary>
 

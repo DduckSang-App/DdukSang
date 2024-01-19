@@ -2,7 +2,9 @@ package com.JangKi.dducksang.Service.Building;
 
 import com.JangKi.dducksang.APImodel.OpenAPI;
 import com.JangKi.dducksang.Service.Address.AddressService;
+import com.JangKi.dducksang.Web.Dto.AddressDto.AddressDto;
 import com.JangKi.dducksang.Web.Dto.BuildingDto.BuildingRequestDto;
+import com.JangKi.dducksang.Web.Dto.BuildingDto.BuildingResponseDto;
 import com.JangKi.dducksang.Web.Dto.Map.MapListDto;
 import com.JangKi.dducksang.domain.Address.Repository.Address;
 import com.JangKi.dducksang.domain.Building.Repository.Building;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Year;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -106,4 +109,9 @@ public class BuildingService {
         return buildingRepo.searchBuildingByCode(siCode, epCode);
     }
 
+    @Transactional(readOnly = true)
+    public List<AddressDto.searchAddressDto> searchBuildingName(String name)
+    {
+        return buildingRepo.searchBuilding(name);
+    }
 }

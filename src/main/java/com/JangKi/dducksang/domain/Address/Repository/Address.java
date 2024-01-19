@@ -40,15 +40,12 @@ public class Address {
     @Column(columnDefinition = "TEXT")
     String locate_v4;
 
-    @Column(columnDefinition = "TEXT")
-    String locate_v5;
-
     @JsonManagedReference(value = "relation-Address-Building")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "address", orphanRemoval = true)
     private List<Building> buildingList = new ArrayList<>();
 
     @Builder
-    public Address(Long code, String located_nm, String locate_v1,String locate_v2, String locate_v3, String locate_v4, String locate_v5, List<Building> buildingList)
+    public Address(Long code, String located_nm, String locate_v1,String locate_v2, String locate_v3, String locate_v4, List<Building> buildingList)
     {
         this.code = code;
         this.located_nm = located_nm;
@@ -56,7 +53,6 @@ public class Address {
         this.locate_v2 = locate_v2;
         this.locate_v3 = locate_v3;
         this.locate_v4 = locate_v4;
-        this.locate_v5 = locate_v5;
         this.buildingList = buildingList;
     }
 
