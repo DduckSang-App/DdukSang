@@ -6,12 +6,14 @@ package com.JangKi.dducksang.Web;
 import com.JangKi.dducksang.APImodel.OpenAPI;
 import com.JangKi.dducksang.Service.Address.AddressService;
 import com.JangKi.dducksang.Service.Building.BuildingService;
+import com.JangKi.dducksang.Service.Sales.SalesService;
 import com.JangKi.dducksang.Web.Dto.AddressDto.AddressDto;
 import com.JangKi.dducksang.Web.Dto.AddressDto.AddressRequestDto;
 import com.JangKi.dducksang.Web.Dto.BuildingDto.BuildingResponseDto;
 import com.JangKi.dducksang.Web.Dto.Map.MapListDto;
 import com.JangKi.dducksang.domain.Address.Repository.Address;
 import com.JangKi.dducksang.domain.Address.Repository.AddressRepo;
+import com.JangKi.dducksang.domain.Building.Repository.Building;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,10 +24,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -45,6 +46,9 @@ import java.util.Set;
 
     @Autowired
     private BuildingService buildingService;
+
+    @Autowired
+    private SalesService salesService;
 
     @PostMapping("/SaveAddressCode")
     public Object save_code() {
@@ -102,30 +106,41 @@ import java.util.Set;
         현재 테스트용 -> 2015년 매매 거래 기록
         행정코드 기준으로 저장
     */
-    @PostMapping("saveRecordBuilding")
-    public Object saveBuilding()
-    {
-        List<Address> addresses = addressRepo.AddressList();
+     @PostMapping("saveRecordBuilding")
+     public Object saveBuilding()
+     {
+         List<String> addresses = addressRepo.searchAllByGroupBy();
 
-        Set<String> codeSet = new HashSet<>();
+         try{
 
-        try{
-
-            for(Address ad : addresses)
+            for(String address : addresses)
             {
-                Long code = ad.getCode();
+                int pageNo = 1;
 
-                String str_code = code.toString().substring(0, 5);
+                while(true)
+                {
+                    String page = String.valueOf(pageNo);
 
-                codeSet.add(str_code);
+                    List<MapListDto> saveList = openAPI.getApi(address, "202311", page);
+
+                    if(saveList.size() == 0)
+                        break;
+
+                    for(MapListDto mapList : saveList)
+                    {
+//                 Address -> Building 1 : N //
+                        Long buildingID = buildingService.saveBuilding(mapList);
+
+//                 Building -> Sales 1 : N //
+                        Building building = buildingService.returnBuilding(buildingID);
+
+                        salesService.SalesSave(building, mapList);
+                    }
+
+                    pageNo++;
+                }
             }
 
-            for(String setCode : codeSet) {
-
-                List<MapListDto> saveList = openAPI.getApi("setCode", "201502", "1");
-
-                log.info(setCode + " " + "svaveList Size : " + saveList.size() );
-            }
         }
         catch (Exception e)
         {
@@ -133,7 +148,57 @@ import java.util.Set;
         }
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
-    }
+     }
+
+//    @PostMapping("saveRecordBuilding")
+//    public Object saveBuilding()
+//    {
+//        List<String> addresses = addressRepo.searchAllByGroupBy();
+//
+//        Long sum = 0L;
+//
+//        log.info("addressSIze: " + addresses.size());
+//
+//        try{
+//
+//            for(String address : addresses)
+//            {
+////                LocalDate startDate = LocalDate.of(2017, 01, 01);
+////                LocalDate endDate = LocalDate.of(2024, 01, 01);
+////
+////                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMM");
+//
+////                LocalDate curDate = startDate;
+//
+////                while(!curDate.isAfter(endDate))
+////                {
+////                    String date = String.valueOf(curDate.format(formatter));
+//
+//                    List<MapListDto> saveList = openAPI.getApi(address, "202311", "1");
+//
+////                    curDate = curDate.plusMonths(1);
+//
+//                    sum += saveList.size();
+////                }
+//
+//                log.info("Code : " + address + "->" + "day : " + date + " -> " + "ListSize : " + " " + sum);
+//            }
+//
+//
+//                        for(String setCode : addresses) {
+//
+//                List<MapListDto> saveList = openAPI.getApi("setCode", "201502", "1");
+//
+//                log.info(setCode + " " + "svaveList Size : " + saveList.size() );
+//            }
+//        }
+//        catch (Exception e)
+//        {
+//            log.info(e.getMessage());
+//        }
+//
+//        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+//    }
 
 //    @GetMapping("/searchAllTest")
 //    public void time1()

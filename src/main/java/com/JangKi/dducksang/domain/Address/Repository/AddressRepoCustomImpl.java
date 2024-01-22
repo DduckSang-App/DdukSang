@@ -41,9 +41,9 @@ public class AddressRepoCustomImpl implements AddressRepoCustom{
     public List<String> searchAllByGroupBy()
     {
         List<String> fetchString = queryFactory
-                .select(address.code.stringValue().substring(1, 5).as("code"))
+                .select(address.code.stringValue().substring(0, 5).as("code"))
                 .from(address)
-                .groupBy(address.code.stringValue().substring(1, 5))
+                .groupBy(address.code.stringValue().substring(0, 5))
                 .fetch();
 
         return fetchString;
