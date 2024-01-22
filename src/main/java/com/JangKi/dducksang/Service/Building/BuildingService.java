@@ -73,7 +73,8 @@ public class BuildingService {
 
             // Building을 저장해준다.
             BuildingRequestDto.BuildingSaveDto buildingSaveDto = new BuildingRequestDto.BuildingSaveDto(year,
-                    mapListDto.getSigunguCode(), mapListDto.getEupmyundongCode(), mapListDto.getSigungu(), mapListDto.getDong(), mapListDto.getAptName());
+                    mapListDto.getSigunguCode(), mapListDto.getEupmyundongCode(), mapListDto.getSigungu(), mapListDto.getDong(), mapListDto.getAptName(),
+                    mapListDto.getRoadBuildingCode(), mapListDto.getRoadSubBuildingCode());
 
             buildingSaveDto.setAddressID(address);
 

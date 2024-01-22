@@ -45,7 +45,7 @@ public class BuildingSalesController {
 
             List<MapListDto> list = openAPI.getApi(sigunguCode, dealMonth, pageNo);
 
-            log.info("list Size - " + list.size());
+            log.info(sigunguCode + "'s list Size - " + list.size());
 
             if(list.size() == 0)
                 break;

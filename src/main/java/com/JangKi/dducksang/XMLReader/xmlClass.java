@@ -36,7 +36,12 @@ public class xmlClass {
 
             org.w3c.dom.Element eElement = (Element) nNode;
 
-            aptList.add(new MapListDto(Integer.parseInt(getTagValue("거래금액", eElement).trim().replace(",", "")), Integer.parseInt(getTagValue("건축년도", eElement)), Integer.parseInt(getTagValue("년", eElement)), Integer.parseInt(getTagValue("월", eElement)), Integer.parseInt(getTagValue("일", eElement)), Integer.parseInt(getTagValue("법정동시군구코드", eElement)), Integer.parseInt(getTagValue("법정동읍면동코드", eElement)), getTagValue("중개사소재지", eElement), getTagValue("법정동", eElement).trim(), getTagValue("아파트", eElement), Double.parseDouble(getTagValue("전용면적", eElement)), Integer.parseInt(getTagValue("층", eElement))));
+            aptList.add(new MapListDto(Integer.parseInt(getTagValue("거래금액", eElement).trim().replace(",", "")), Integer.parseInt(getTagValue("건축년도", eElement)),
+                    Integer.parseInt(getTagValue("년", eElement)), Integer.parseInt(getTagValue("월", eElement)), Integer.parseInt(getTagValue("일", eElement)),
+                    Integer.parseInt(getTagValue("법정동시군구코드", eElement)), Integer.parseInt(getTagValue("법정동읍면동코드", eElement)), getTagValue("중개사소재지", eElement),
+                    getTagValue("법정동", eElement).trim(), getTagValue("아파트", eElement), Double.parseDouble(getTagValue("전용면적", eElement)),
+                    Integer.parseInt(getTagValue("층", eElement)), getTagValue("도로명건물본번호코드", eElement), getTagValue("도로명건물부번호코드", eElement)
+                    ));
         }
 
         return aptList;
