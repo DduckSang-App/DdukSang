@@ -35,7 +35,11 @@ public class BuildingRequestDto {
 
         private String roadSubBuildingCode;
 
-        public BuildingSaveDto(Year buildYear, int sigunguCode, int eupmyundongCode, String sigungu, String dong, String aptName, String roadBuildingCode, String roadSubBuildingCode)
+        private String roadName;
+
+        private Long code;
+
+        public BuildingSaveDto(Year buildYear, int sigunguCode, int eupmyundongCode, String sigungu, String dong, String aptName, String roadBuildingCode, String roadSubBuildingCode, String roadName, Long code)
         {
             this.buildYear = buildYear;
             this.sigunguCode = sigunguCode;
@@ -45,6 +49,8 @@ public class BuildingRequestDto {
             this.aptName = aptName;
             this.roadBuildingCode = roadBuildingCode;
             this.roadSubBuildingCode = roadSubBuildingCode;
+            this.roadName = roadName;
+            this.code = code;
         }
 
         public void setAddressID(Address addressID)
@@ -65,6 +71,8 @@ public class BuildingRequestDto {
                     .address(addressID)
                     .roadBuildingCode(roadBuildingCode)
                     .roadSubBuildingCode(roadSubBuildingCode)
+                    .roadName(roadName)
+                    .code(code)
                     .build();
         }
     }

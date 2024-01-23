@@ -40,7 +40,8 @@ public class xmlClass {
                     Integer.parseInt(getTagValue("년", eElement)), Integer.parseInt(getTagValue("월", eElement)), Integer.parseInt(getTagValue("일", eElement)),
                     Integer.parseInt(getTagValue("법정동시군구코드", eElement)), Integer.parseInt(getTagValue("법정동읍면동코드", eElement)), getTagValue("중개사소재지", eElement),
                     getTagValue("법정동", eElement).trim(), getTagValue("아파트", eElement), Double.parseDouble(getTagValue("전용면적", eElement)),
-                    Integer.parseInt(getTagValue("층", eElement)), getTagValue("도로명건물본번호코드", eElement), getTagValue("도로명건물부번호코드", eElement)
+                    Integer.parseInt(getTagValue("층", eElement)), getTagValue("도로명건물본번호코드", eElement), getTagValue("도로명건물부번호코드", eElement),
+                    getTagValue("도로명", eElement)
                     ));
         }
 

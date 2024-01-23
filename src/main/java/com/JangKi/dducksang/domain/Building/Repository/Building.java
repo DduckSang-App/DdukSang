@@ -53,6 +53,9 @@ public class Building {
     @Column
     private String roadSubBuildingCode; // 건물명부번호코드
 
+    @Column
+    private String roadName; // 도로명
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AddressID")
     @JsonBackReference(value = "relation-Address-Building")
@@ -63,7 +66,7 @@ public class Building {
     private List<Sales> salesList = new ArrayList<>();
 
     @Builder
-    public Building(Year buildYear, Long code, int sigunguCode, int eupmyundongCode, String sigungu, String dong, String aptName, Address address, List<Sales> salesList, String roadBuildingCode, String roadSubBuildingCode)
+    public Building(Year buildYear, Long code, int sigunguCode, int eupmyundongCode, String sigungu, String dong, String aptName, Address address, List<Sales> salesList, String roadBuildingCode, String roadSubBuildingCode, String roadName)
     {
         this.buildYear = buildYear;
         this.code = code;
@@ -76,6 +79,7 @@ public class Building {
         this.salesList = salesList;
         this.roadBuildingCode = roadBuildingCode;
         this.roadSubBuildingCode = roadSubBuildingCode;
+        this.roadName = roadName;
     }
 
 
