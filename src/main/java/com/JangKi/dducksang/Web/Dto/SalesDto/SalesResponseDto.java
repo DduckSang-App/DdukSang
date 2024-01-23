@@ -22,6 +22,8 @@ public class SalesResponseDto {
 
         String dong; // 동 이름
 
+        String roadName; // 도로명
+
         List<Object> salesList = new ArrayList<>();
 
         public void setLocatedNM(String locatedNM)
@@ -38,6 +40,7 @@ public class SalesResponseDto {
             this.buildYear = building.getBuildYear();
             this.aptName = building.getAptName();
             this.dong = building.getDong();
+            this.roadName = building.getRoadName().concat(" ").concat(building.getRoadBuildingCode()).concat("-").concat(building.getRoadSubBuildingCode());
         }
     }
 }

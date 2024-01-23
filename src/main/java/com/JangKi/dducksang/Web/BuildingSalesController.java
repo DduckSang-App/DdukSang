@@ -45,7 +45,7 @@ public class BuildingSalesController {
 
             List<MapListDto> list = openAPI.getApi(sigunguCode, dealMonth, pageNo);
 
-            log.info("list Size - " + list.size());
+            log.info(sigunguCode + "'s list Size - " + list.size());
 
             if(list.size() == 0)
                 break;
@@ -72,6 +72,9 @@ public class BuildingSalesController {
 
         // locateNM -> code convert
         String code = String.valueOf(addressService.searchCityCode(locateStr));
+
+        //TODO
+        // try catch로 예외상황 처리해줘야함! [ StringIndexOutOfBoundsException -> code를 찾지 못했을 때 ]
 
         int sigunguCode = Integer.valueOf(code.substring(0, 5));
         int epmundongCodee = Integer.valueOf(code.substring(5));

@@ -34,7 +34,13 @@ public class MapListDto {
 
     private int floor; //층
 
-    public MapListDto(int amount, int buildYear, int dealYear, int dealMonth, int dealDay, int sigunguCode, int eupmyundongCode, String dong, String aptName, double dedicatedArea, int floor)
+    private String roadBuildingCode;
+
+    private String roadSubBuildingCode;
+
+    private String roadName;
+
+    public MapListDto(int amount, int buildYear, int dealYear, int dealMonth, int dealDay, int sigunguCode, int eupmyundongCode, String dong, String aptName, double dedicatedArea, int floor, String roadBuildingCode, String roadSubBuildingCode, String roadName)
     {
         this.amount = amount;
         this.buildYear =buildYear;
@@ -47,5 +53,8 @@ public class MapListDto {
         this.aptName = aptName;
         this.dedicatedArea = dedicatedArea;
         this.floor = floor;
+        this.roadBuildingCode = roadBuildingCode;
+        this.roadSubBuildingCode = roadSubBuildingCode;
+        this.roadName = roadName;
     }
 }
