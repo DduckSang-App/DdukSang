@@ -63,7 +63,7 @@ public class BuildingService {
         // 만약에 없으면
         if(!buildingRepo.exist(mapListDto.getSigunguCode(), mapListDto.getEupmyundongCode(),mapListDto.getAptName()))
         {
-            String codeStr = String.valueOf(mapListDto.getSigunguCode()) + String.valueOf(mapListDto.getEupmyundongCode());
+            String codeStr = String.valueOf(mapListDto.getSigunguCode()).concat(String.valueOf(mapListDto.getEupmyundongCode()));
 
             Long code = Long.valueOf(codeStr);
 
@@ -73,7 +73,8 @@ public class BuildingService {
 
             // Building을 저장해준다.
             BuildingRequestDto.BuildingSaveDto buildingSaveDto = new BuildingRequestDto.BuildingSaveDto(year,
-                    mapListDto.getSigunguCode(), mapListDto.getEupmyundongCode(), mapListDto.getSigungu(), mapListDto.getDong(), mapListDto.getAptName());
+                    mapListDto.getSigunguCode(), mapListDto.getEupmyundongCode(), mapListDto.getSigungu(), mapListDto.getDong(), mapListDto.getAptName(),
+                    mapListDto.getRoadBuildingCode(), mapListDto.getRoadSubBuildingCode(), mapListDto.getRoadName(), Long.valueOf(codeStr));
 
             buildingSaveDto.setAddressID(address);
 
