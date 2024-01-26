@@ -396,7 +396,8 @@ WHERE located_nm LIKE "%서울특별시 종로구1%"<br>
 
 ## 주요 기능 관련 내용 [ 일부 기능만 현재 첨부 , 추후 추가]
 
-### 1. 읍면동에 대한 데이터 처리
+### 1. 읍면동에 대한 데이터 처리 [PR Link](https://github.com/DduckSang-App/DdukSang/pull/66)
+
 <details>
 <summary>관련 내용</summary>
 
