@@ -3,15 +3,22 @@ package com.JangKi.dducksang.domain.Building.Repository;
 import com.JangKi.dducksang.Web.Dto.AddressDto.AddressDto;
 import com.JangKi.dducksang.Web.Dto.BuildingDto.BuildingResponseDto;
 import com.JangKi.dducksang.domain.Address.Repository.Address;
+import com.JangKi.dducksang.domain.Sales.Sales;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.ConstantImpl;
+import com.querydsl.core.types.dsl.DateTemplate;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.JangKi.dducksang.domain.Address.Repository.QAddress.address;
 import static com.JangKi.dducksang.domain.Building.Repository.QBuilding.building;
+import static com.JangKi.dducksang.domain.Sales.QSales.sales;
 
 @RequiredArgsConstructor
 public class BuildingRepoCustomImpl implements BuildingRepoCustom{
@@ -50,5 +57,24 @@ public class BuildingRepoCustomImpl implements BuildingRepoCustom{
                 .collect(Collectors.toList());
 
         return searchBuildingList;
+    }
+//    @Query("SELECT s FROM Building b inner join Sales s on b.Id = s.building.Id where b.Id = :cityID")
+    public List<Sales> salesTransactionList(Long cityID, String dateStr)
+    {
+        DateTemplate formattedDate = Expressions.dateTemplate(
+                String.class
+                , "DATE_FORMAT({0}, {1})"
+                , sales.salesDate
+                , ConstantImpl.create("%Y%m"));
+
+        List<Sales> fetchList = queryFactory
+                .select(sales)
+                .from(sales)
+                .join(sales.building, building)
+                .where(building.Id.eq(cityID))
+                .where(formattedDate.eq(dateStr))
+                .fetch();
+
+        return fetchList;
     }
 }

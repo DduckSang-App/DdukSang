@@ -49,4 +49,10 @@ public class SalesService {
         return salesRepo.SalesInfo(Id);
     }
 
+
+    @Transactional(readOnly = true)
+    public Double CalculateSalesAmount(String dateStr, Long BuildingID)
+    {
+        return salesRepo.CalculateAverage(dateStr,BuildingID);
+    }
 }

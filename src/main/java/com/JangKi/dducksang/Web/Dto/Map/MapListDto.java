@@ -40,7 +40,12 @@ public class MapListDto {
 
     private String roadName;
 
-    public MapListDto(int amount, int buildYear, int dealYear, int dealMonth, int dealDay, int sigunguCode, int eupmyundongCode, String dong, String aptName, double dedicatedArea, int floor, String roadBuildingCode, String roadSubBuildingCode, String roadName)
+    private String Bonbun;
+
+    private String Bubun;
+
+    public MapListDto(int amount, int buildYear, int dealYear, int dealMonth, int dealDay, int sigunguCode, int eupmyundongCode, String dong, String aptName, double dedicatedArea, int floor, String roadBuildingCode, String roadSubBuildingCode, String roadName
+    ,String Bonbun, String Bubun)
     {
         this.amount = amount;
         this.buildYear =buildYear;
@@ -56,5 +61,7 @@ public class MapListDto {
         this.roadBuildingCode = roadBuildingCode;
         this.roadSubBuildingCode = roadSubBuildingCode;
         this.roadName = roadName;
+        this.Bonbun = Bonbun;
+        this.Bubun = Bubun;
     }
 }

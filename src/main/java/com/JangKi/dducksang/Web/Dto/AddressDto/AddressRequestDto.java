@@ -9,5 +9,9 @@ public class AddressRequestDto {
     @NoArgsConstructor
     public static class SigunguRequestDto{
         public String SiGunGu;
+
+        public String startDate;
+
+        public String endDate;
     }
 }
