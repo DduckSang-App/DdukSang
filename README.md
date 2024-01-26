@@ -292,8 +292,38 @@ WHERE located_nm LIKE "%서울특별시 종로구1%"<br>
 > VisualVM의 결과를 확인해보면 비율상 DISTINCT 와 GroupBy에 비해 3배 가량 TotalTime이 기록되었다.
 
 
+</details>
 
 
+## 6. 전[특정]월 ~ 현재[특정]월 매매 평균 API
+
+<details>
+<summary>관련 내용</summary>
+
+> 현재 우리 프로젝트는 startDate vs endDate를 통해서 두 개의 비교군만으로 매매 상승률을 측정한다.
+
+> 현재 매매 평균을 구하기 위해서 Average 함수를 사용하는데 있어서 2가지 방법에 대해서 성능을 비교해본 것을 남겨두었습니다.
+
+#### 1. 매매 데이터를 넣은 salesList[ArrayList 타입] 객체를 for문으로 단순 측정
+
+#### 2. 새로운 QueryDsl 날려주기 (Average로만 구성된 query)
+
+- 비교 결과 [6개의 데이터로 진행]<br> 
+
+- >1번 결과 [startDate 2개, endDate 10개] <br>
+  ![image](https://github.com/DduckSang-App/DdukSang/assets/75063989/aa06395a-6357-4a96-b311-e7ffda8dae45)
+  > <br> 1번 단순 비교하는 방법이 훨씬 빠르다.
+
+- >2번 결과 [startDate 1개, endDate 0개] <br>
+  ![image](https://github.com/DduckSang-App/DdukSang/assets/75063989/aa06395a-6357-4a96-b311-e7ffda8dae45)
+  > <br> 1번 단순 비교하는 방법이 훨씬 빠르다.
+
+- >3번 결과 [startDate 4개, endDate 3개] <br>
+  ![image](https://github.com/DduckSang-App/DdukSang/assets/75063989/91fbe861-14fc-4afd-9b82-6f67f216028b)
+  > <br> 1번 단순 비교하는 방법이 훨씬 빠르다.
+
+>값이 크던 작던, 1번 단순 비교가 훨씬 빠른 성능을 냈다. <br>
+> 추후에 Ngrinder 도입과 더불어서 쿼리 성능을 최적화해서 비교하는 글을 남길 예정입니다.
 
 </details>
 
