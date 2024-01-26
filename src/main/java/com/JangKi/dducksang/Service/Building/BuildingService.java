@@ -74,7 +74,7 @@ public class BuildingService {
             // Building을 저장해준다.
             BuildingRequestDto.BuildingSaveDto buildingSaveDto = new BuildingRequestDto.BuildingSaveDto(year,
                     mapListDto.getSigunguCode(), mapListDto.getEupmyundongCode(), mapListDto.getSigungu(), mapListDto.getDong(), mapListDto.getAptName(),
-                    mapListDto.getRoadBuildingCode(), mapListDto.getRoadSubBuildingCode(), mapListDto.getRoadName(), Long.valueOf(codeStr));
+                    mapListDto.getRoadBuildingCode(), mapListDto.getRoadSubBuildingCode(), mapListDto.getRoadName(), Long.valueOf(codeStr), mapListDto.getBonbun(), mapListDto.getBubun());
 
             buildingSaveDto.setAddressID(address);
 
@@ -115,4 +115,12 @@ public class BuildingService {
     {
         return buildingRepo.searchBuilding(name);
     }
+
+    @Transactional(readOnly = true)
+    public List<Sales> salesTransactionService(Long cityID, String dateStr)
+    {
+        return buildingRepo.salesTransactionList(cityID, dateStr);
+    }
+
+
 }

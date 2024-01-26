@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public interface SalesRepo extends JpaRepository<Sales, Long> {
+public interface SalesRepo extends JpaRepository<Sales, Long> , SalesRepoCustom {
     @Query("SELECT s FROM Sales s left join Building b on s.building.Id = b.Id where b.Id = :ID")
     List<Map<String, Object>> SalesInfo(@Param("ID") Long ID);
 }
