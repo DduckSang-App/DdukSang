@@ -13,4 +13,8 @@ public interface BuildingRepoCustom {
     List<AddressDto.searchAddressDto> searchBuilding(String name);
 
     List<Sales> salesTransactionList(Long cityID, String dateStr);
+
+    Boolean existBuildingInCode(int sigunguCode, int eupmyundongCode);
+
+    List<Building> searchBuildingOutOfRange(String code, int range);
 }

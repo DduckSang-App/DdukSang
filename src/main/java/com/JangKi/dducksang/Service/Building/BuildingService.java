@@ -111,6 +111,12 @@ public class BuildingService {
     }
 
     @Transactional(readOnly = true)
+    public List<Building> searchBuildingFromSigungu(int siCode)
+    {
+        return buildingRepo.searchBuildingFromSigungu(siCode);
+    }
+
+    @Transactional(readOnly = true)
     public List<AddressDto.searchAddressDto> searchBuildingName(String name)
     {
         return buildingRepo.searchBuilding(name);
@@ -122,5 +128,30 @@ public class BuildingService {
         return buildingRepo.salesTransactionList(cityID, dateStr);
     }
 
+    @Transactional(readOnly = true)
+    public boolean ExistBuildingInCode(int sigunguCode, int eupmyundongCode)
+    {
+        return buildingRepo.existBuildingInCode(sigunguCode, eupmyundongCode);
+    }
 
+    public int returnNewCode(int size)
+    {
+        switch(size)
+        {
+            // 시만 입력됐을 경우 -> size 2반납
+            case 1:
+                return 2;
+            case 2:
+                return 5;
+            case 3:
+                return 8;
+        }
+
+        return 10;
+    }
+
+    public List<Building> searchBuildingOutOfRange(String code, int range)
+    {
+        return buildingRepo.searchBuildingOutOfRange(code, range);
+    }
 }
