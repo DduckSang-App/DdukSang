@@ -23,5 +23,8 @@ public interface BuildingRepo extends JpaRepository<Building, Long>, BuildingRep
 
     @Query("SELECT b FROM Building b WHERE b.sigunguCode = :siCode and b.eupmyundongCode = :epCode")
     List<Building> searchBuildingByCode(@Param("siCode") int siCode, @Param("epCode") int epCode);
+
+    @Query("SELECT b FROM Building b WHERE b.sigunguCode = :siCode")
+    List<Building> searchBuildingFromSigungu(@Param("siCode") int siCode);
 }
 

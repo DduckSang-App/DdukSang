@@ -45,8 +45,4 @@ public class MapController {
         return list;
     }
 
-
-
-
-
 }

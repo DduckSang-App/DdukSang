@@ -25,6 +25,19 @@ public class BuildingRepoCustomImpl implements BuildingRepoCustom{
 
     private final JPAQueryFactory queryFactory;
 
+    public Boolean existBuildingInCode(int sigunguCode, int eupmyundongCode)
+    {
+        Integer fecthOne = queryFactory
+                .selectOne()
+                .from(building)
+                .where(building.sigunguCode.eq(sigunguCode)
+                        .and(building.eupmyundongCode.eq(eupmyundongCode))
+                )
+                .fetchFirst(); // limit 1
+
+        return fecthOne != null;
+    }
+
     public Boolean exist(int sigunguCode, int eupmyundong, String aptName) {
         Integer fetchOne = queryFactory
                 .selectOne()
@@ -76,5 +89,15 @@ public class BuildingRepoCustomImpl implements BuildingRepoCustom{
                 .fetch();
 
         return fetchList;
+    }
+
+    public List<Building> searchBuildingOutOfRange(String code, int range)
+    {
+        List<Building> fetchBuilding = queryFactory
+                .selectFrom(building)
+                .where(building.code.stringValue().substring(0, range).eq(code.substring(0, range)))
+                .fetch();
+
+        return fetchBuilding;
     }
 }
