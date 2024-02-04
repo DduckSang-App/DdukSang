@@ -384,7 +384,8 @@ WHERE located_nm LIKE "%서울특별시 종로구1%"<br>
 <br>
 
 위의 형식 처럼 진행이 되는데,
-<script src="https://gist.github.com/KiUkKim/e2c587f730de69ee6a274c3468433e47"></script>
+
+<script src="https://gist.github.com/KiUkKim/e2c587f730de69ee6a274c3468433e47.js"></script>
 
 <br>
 해당 코드 처럼, 반환이 되게 된다면 View에 대한 생성되지 않았으므로, 오류가 발생했다.
